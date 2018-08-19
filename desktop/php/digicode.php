@@ -184,11 +184,6 @@ $eqLogics = eqLogic::byType($plugin->getId());
                 </tbody>
             </table>
         </div>
-
-
-
-
-
     </div>
 </div>
 </div>

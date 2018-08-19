@@ -1,7 +1,7 @@
 Description
 ===
 
-Ce plugin permet d'afficher un  digicode pour piloter une alarme.
+Ce plugin permet d'afficher un  digicode logiciel pour piloter une alarme.
 
 ![widget](../images/widget.png)
 
@@ -11,6 +11,7 @@ il inclus les fonctionnalités suivantes :
 - Test des ouvrants avant activation
 - Test de l'état de l'alarme avant activation
 - Message sur état
+- Blocage de la fonction retour du navigateur
 
 Installation
 ===

@@ -7,6 +7,7 @@
 # Présentation:
 
 Ce plugin permet d'afficher un widget digicode et de piloter une alarme.
+
 [![Read the Docs](docs/images/widget.png)](docs/images/widget.png)
 
 # Documentation du plugin:

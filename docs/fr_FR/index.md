@@ -2,6 +2,7 @@ Description
 ===
 
 Ce plugin permet d'afficher un  digicode pour piloter une alarme.
+
 ![widget](../images/widget.png)
 
 il inclus les fonctionnalités suivantes :

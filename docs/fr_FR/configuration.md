@@ -8,14 +8,12 @@ Il n'y a aucune configuration générale pour ce plugin.
 ## Installation
 Télécharger le plugin depuis le [Market](https://www.jeedom.com/market/index.php?v=d&p=market&type=plugin&&name=digicode) Jeedom
 
-Après avoir créer un équipement, voici la page de configuration
-![Equipement](../images/Equipement.png)
-
 ## Configuration
 Une fois le plugin installé, il faut aller dans le menu Plugin -> Sécurité -> Digicode Plugin et créer un équipement.
 
 Il faut ensuite donner les informations de votre alarme.
-![Commandes](../images/Commandes.png)
+
+![equipement](../images/equipement.png)
 
 1 - La commande qui fournie le statut de l'alarme
 2 - La commande qui active le mode Total
@@ -25,5 +23,12 @@ Il faut ensuite donner les informations de votre alarme.
 7 - Délais d'activation
 
 ### Création des utilisateurs
-La création des utilisateurs se fait directement depuis le widget en cliquant sur la roue crantée qui se situe en bas à droite.
+La création, la modification et la suppression des utilisateurs se fait directement depuis le widget en cliquant sur la roue crantée qui se situe en bas à droite.
+
+![configuration](../images/configuration.png)
+
 NB : cette icone est incassible lorsque l'arlame est activée.
+
+APrès avoir cliqué sur l'icone, une fenêtre s'ouvre et permet la gestion des comptes.
+
+![utilisateurs](../images/utilisateurs.png)

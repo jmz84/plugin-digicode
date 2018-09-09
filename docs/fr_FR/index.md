@@ -61,5 +61,5 @@ Après avoir cliqué sur l'icone, une fenêtre s'ouvre et permet la gestion des 
 
 Changelog
 ===
-### Version 1.0 (version market 2018-08-19 22:01:25)
-- Verion initiale
+### Version 1.0 (version market 2018-09-09 10:10:00)
+- Version initiale

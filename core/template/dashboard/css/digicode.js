@@ -1,11 +1,11 @@
 jQuery.fn.extend({
-  
+
   digicode: function(callback, delayReset) {
-    
+
     this.html('<ul class="digiEvent"><li></li><li></li><li></li><li></li><li></li></ul><ul class="digicodePanel"><div> <li>1</li><li>2</li><li>3</li><li class="digiFunction digiFunctionPartiel">P</li></div><div> <li>4</li><li>5</li><li>6</li><li class="digiFunction digiFunctionTotal">T</li></div><div> <li>7</li><li>8</li><li>9</li><li class="digiFunction digiFunctionDesarmer">D</li></div><div> <li>A</li><li>0</li><li>B</li><li class="digiReset">X</li></div></ul>');
-    this.addClass('digicode');   
+    this.addClass('digicode');
     this.delayReset = $.isNumeric(delayReset) ? delayReset : 4; //DELAY EN SECONDE POUR AUTO RESET CODE
-    this.jeedomExecute = $.isFunction(callback) ? callback : (function () {}) ; 	
+    this.jeedomExecute = $.isFunction(callback) ? callback : (function () {}) ;
     this.keys = this.find('.digicodePanel li');
     this.Displays = this.find('.digiEvent li');
     this.inputs = [];
@@ -18,7 +18,7 @@ jQuery.fn.extend({
         this.Displays.eq(i).addClass('digiFilled');
       }).bind(this));
     }).bind(this);
-    
+
     this.clearCode = (function() {
       this.inputs = [];
       this.displayInputs();
@@ -31,7 +31,7 @@ jQuery.fn.extend({
       }
       this.timer = setInterval(this.clearCode, this.delayReset);
     }).bind(this);
-   
+
     this.codeReady = (function() {
       this.jeedomExecute(this.inputs.join(''));
         setTimeout((function() {
@@ -42,7 +42,7 @@ jQuery.fn.extend({
         }).bind(this), 500);
     }).bind(this);
 
-    this.keys.on(('ontouchstart' in document.documentElement) ? "touchstart" : "click", (function(e) {
+    this.keys.on("click", (function(e) {
       var el = $(e.currentTarget);
       if (el.hasClass('digiReset')) {
         this.clearCode();
@@ -59,13 +59,13 @@ jQuery.fn.extend({
     }).bind(this));
 
     this.keys.on('mouseup mouseleave touchend', function() {
-      var el = $(this);          
+      var el = $(this);
       if (!el.hasClass('digiReset')) {
-        setTimeout(function() { 
+        setTimeout(function() {
           el.removeClass('digiSel');
         }, 150);
       }
     });
-        
+
   }
 });

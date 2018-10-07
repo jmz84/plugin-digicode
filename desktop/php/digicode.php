@@ -151,6 +151,9 @@ $eqLogics = eqLogic::byType($plugin->getId());
                                 </span>
                             </div>
                         </div>
+                      <div class="col-sm-1 has-success">
+                      <label><input type="checkbox" class="eqLogicAttr configuration " data-l1key="configuration" data-l2key="invertDigicodeEtatPortes"/>{{Inverser}}</label>
+                       </div>                        
                         <label class="col-sm-4 control-label">{{Etat des fenêtres}}</label>
                         <div class="col-sm-6">
                             <div class="input-group">
@@ -160,6 +163,9 @@ $eqLogics = eqLogic::byType($plugin->getId());
                                 </span>
                             </div>
                         </div>
+                      <div class="col-sm-1 has-success">
+                      <label><input type="checkbox" class="eqLogicAttr configuration" data-l1key="configuration" data-l2key="invertdigicodeEtatFenetres"/>{{Inverser}}</label>
+                       </div>                    
                         <label class="col-sm-4 control-label">{{Délais}}</label>
                         <div class="col-sm-6">
                             <input type="text" class="eqLogicAttr configuration form-control" data-l1key="configuration" data-l2key="digicodeDelais" />

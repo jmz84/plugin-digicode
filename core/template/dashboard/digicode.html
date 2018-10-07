@@ -1,24 +1,26 @@
-<div class="eqLogic-widget eqLogic digicode" style="width: 275px;height: 360px;padding : 0px;border: #border#;border-radius: #border-radius#;background-color: #background-color#;color: #color#;#style#;" data-eqLogic_id="#id#" data-eqLogic_uid="#uid#" data-version="#version#">
+<div class="eqLogic-widget eqLogic digicode" style="width: 280px;height: 360px;padding : 0px;border: #border#;border-radius: #border-radius#;background-color: #background-color#;color: #color#;#style#;" data-eqLogic_id="#id#" data-eqLogic_uid="#uid#" data-version="#version#">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <center><a href="#eqLink#" style="font-size : 1.2em;"> #name# </a></center>
   <span class="spanConfiguration" style="position : absolute;bottom: 3px;right: 35px;font-size : 2.5em;"><i class="fa fa-gear" title="Configuration utilisateur"></i></span>
   <span class="spanEtatFenetres"></span>
   <span class="spanEtatPortes"></span>
 
 
   <style>
-  center {
-    padding: 10 !important;
-  }
+  .code {
+    margin: 0;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin-right: -50%;
+    transform: translate(-50%, -50%) 
+    }
 
 </style>
 
-<div class="cmd" data-cmd_id="#value_id#"></div>
-
-<span class="spanEtat" style="position : absolute;bottom: 3px;left: 25px;cursor:pointer;"></span>
-
-<span id="countdowntimer" style="position : absolute;bottom: 1px;left: 120px;color:red;font-weight: bold;font-size: 3em;"></span>
-<span class="spanMessage" style="width: 100%;text-align: center;position : absolute;bottom: 60px;color:orange;font-size: 1em">#message#</span>
+<div class="code" data-cmd_id="#value_id#"></div>
+<span class="spanEtat" style="position:absolute; bottom:3px; left:25px; cursor:pointer;"></span>
+<span id="countdowntimer" style="width:100%; text-align:center; position:absolute; bottom:1px; color:red; font-weight:bold; font-size:3em;"></span>
+<span class="spanMessage" style="width:100%; text-align:center; position:absolute; top:10px; color:orange ;font-size:1em">#message#</span>
 
 
 <script>
@@ -30,7 +32,7 @@ $.include([ 'plugins/digicode/core/template/dashboard/css/digicode.css',
 'plugins/digicode/core/template/dashboard/css/digicode.js'
 ],
 function() {
-  $('div.cmd[data-cmd_id="#value_id#"]').digicode(function(code) {
+  $('div.code[data-cmd_id="#value_id#"]').digicode(function(code) {
     jeedom.cmd.execute({
       id: '#save code_id#',
       value: { title : '', message: code },
@@ -66,7 +68,9 @@ function() {
 }
 );
 
-
+if ('#codemaitre#' == 1) {
+  $('.eqLogic[data-eqLogic_uid=#uid#] .spanConfiguration').hide();
+}
 if ('#etat#' == 1) {
   $('.eqLogic[data-eqLogic_uid=#uid#] .spanEtat').append('<img src="plugins/digicode/core/template/dashboard/img/total.png" height="50px" width="50px" />');
   $('.eqLogic[data-eqLogic_uid=#uid#] .spanConfiguration').hide();

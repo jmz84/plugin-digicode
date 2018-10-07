@@ -28,9 +28,10 @@ try {
     case 'Modify':
       $id  = init('id');
       $cmdid = init('cmdid');
-      $code 	= init('code');
+      $code = init('code');
+      $master 	= init('master');
       $cmdName = init('cmdName');
-      ajax::success(digicode::modifyUserCode($id,$cmdid,$code,$cmdName));
+      ajax::success(digicode::modifyUserCode($id,$cmdid,$code,$master,$cmdName));
       break;
 
       case 'Remove':
@@ -43,7 +44,8 @@ try {
       $id  = init('id');
       $user = init('user');
       $code 	= init('code');
-      ajax::success(digicode::AddUser($id,$user,$code));
+      $master 	= init('master');
+      ajax::success(digicode::AddUser($id,$user,$code,$master));
       break;
     }
 

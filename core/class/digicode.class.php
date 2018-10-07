@@ -4,7 +4,7 @@ require_once dirname(__FILE__).'/../../../../core/php/core.inc.php';
 
 class digicode extends eqLogic {
 
-  public static function modifyUserCode($id,$cmdid,$code,$cmdName)
+  public static function modifyUserCode($id,$cmdid,$code,$master,$cmdName)
   {
     $digicode    = eqLogic::byId($id);
     $cmd = new digicodeCmd();
@@ -14,6 +14,7 @@ class digicode extends eqLogic {
     $cmd->setType('info');
     $cmd->setSubType('numeric');
     $cmd->setConfiguration('userCode', $code);
+    $cmd->setConfiguration('masterCode', $master);
     $cmd->save();
   }
 
@@ -27,7 +28,7 @@ class digicode extends eqLogic {
 
   }
 
-  public static function AddUser($id,$user,$code)
+  public static function AddUser($id,$user,$code,$master)
   {
     $digicode    = eqLogic::byId($id);
     $digicodeCmd = $digicode->getCmd(null, $user);
@@ -40,6 +41,7 @@ class digicode extends eqLogic {
     }
 	$digicodeCmd->setOrder(99);
     $digicodeCmd->setConfiguration('userCode', $code);
+    $digicodeCmd->setConfiguration('masterCode', $master);
     $digicodeCmd->save();
   }
 
@@ -50,18 +52,27 @@ class digicode extends eqLogic {
     $etatFenetres = cmd::byString($eqLogic->getConfiguration('digicodeEtatFenetres'));
     $valueEtatFenetres  = $etatFenetres->execCmd();
     $etatPortes = cmd::byString($eqLogic->getConfiguration('digicodeEtatPortes'));
-    $valueEtatPorte  = $etatPortes->execCmd();
+    $valueEtatPortes  = $etatPortes->execCmd();
+	$invertEtatFenetres = $eqLogic->getConfiguration('invertdigicodeEtatFenetres');
+	$invertEtatPortes = $eqLogic->getConfiguration('invertDigicodeEtatPortes'); 
+    
+if (isset($invertEtatFenetres) && $invertEtatFenetres == 1) {
+					$valueEtatFenetres = ($valueEtatFenetres == 1 || $valueEtatFenetres) ? 0 : 1;
+				}
+if (isset($invertEtatPortes) && $invertEtatPortes == 1) {
+					$valueEtatPortes = ($valueEtatPortes == 1 || $valueEtatPortes) ? 0 : 1;
+				}    
 
 
-    if($valueEtatFenetres == 1 && $valueEtatPorte == 0){
+    if($valueEtatFenetres == 1 && $valueEtatPortes == 0){
       log::add('digicode', 'DEBUG', 'Au moins une fenêtre est restée ouverte !');
       $eqLogic->checkAndUpdateCmd('message', 'Fenetre(s) ouverte(s)');
       $eqLogic->save();
-    }elseif($valueEtatPorte == 1 && $valueEtatFenetres == 0){
+    }elseif($valueEtatPortes == 1 && $valueEtatFenetres == 0){
       log::add('digicode', 'DEBUG', 'Au moins une porte est restée ouverte !');
       $eqLogic->checkAndUpdateCmd('message', 'Porte(s) ouverte(s)');
       $eqLogic->save();
-    }elseif($valueEtatPorte == 1 && $valueEtatFenetres == 1){
+    }elseif($valueEtatPortes == 1 && $valueEtatFenetres == 1){
       log::add('digicode', 'DEBUG', 'Au moins une porte est restée ouverte !');
       $eqLogic->checkAndUpdateCmd('message', 'Porte(s) et Fenêtre(s) ouverte(s)');
       $eqLogic->save();
@@ -134,17 +145,29 @@ class digicode extends eqLogic {
     $digicodeCmd->setConfiguration('type', 'cmdwiget');
     $digicodeCmd->save();
 
+        $digicodeCmd = $this->getCmd(null, 'codemaitre');
+    if (!is_object($digicodeCmd)) {
+      $digicodeCmd = new digicodeCmd();
+      $digicodeCmd->setName(__('codemaitre', __FILE__));
+      $digicodeCmd->setEqLogic_id($this->getId());
+      $digicodeCmd->setIsVisible(0);
+      $digicodeCmd->setLogicalId('codemaitre');
+      $digicodeCmd->setType('info');
+      $digicodeCmd->setSubType('numeric');
+    }
+    $digicodeCmd->setConfiguration('type', 'cmdwiget');
+    $digicodeCmd->save();
     /********** Getters and setters **********/
 
   }
 
 
-  public function toHtml($_version = 'dashboard')
-  {
-    $replace = $this->preToHtml($_version);
-    if (!is_array($replace)) {
-      return $replace;
-    }
+    public function toHtml($_version = 'dashboard')
+    {
+        $replace = $this->preToHtml($_version);
+        if (!is_array($replace)) {
+            return $replace;
+        }
     $version = jeedom::versionAlias($_version);
     foreach ($this->getCmd('info') as $cmd) {
       $replace['#' . $cmd->getLogicalId() . '#']    = $cmd->execCmd();
@@ -160,14 +183,31 @@ class digicode extends eqLogic {
 
     $cmdEtatFenetres = cmd::byString($this->getConfiguration('digicodeEtatFenetres'));
     $valueEtatFenetres  = $cmdEtatFenetres->execCmd();
-    $replace['#EtatFenetres#'] = $valueEtatFenetres;
+
     $cmdEtatPortes = cmd::byString($this->getConfiguration('digicodeEtatPortes'));
     $valueEtatPortes  = $cmdEtatPortes->execCmd();
-    $replace['#EtatPortes#'] = $valueEtatPortes;
+
+	$invertEtatFenetres = $this->getConfiguration('invertdigicodeEtatFenetres');
+	$invertEtatPortes = $this->getConfiguration('invertDigicodeEtatPortes'); 
+    
+if (isset($invertEtatFenetres) && $invertEtatFenetres == 1) {
+					$valueEtatFenetres = ($valueEtatFenetres == 1 || $valueEtatFenetres) ? 0 : 1;
+				}
+if (isset($invertEtatPortes) && $invertEtatPortes == 1) {
+					$valueEtatPortes = ($valueEtatPortes == 1 || $valueEtatPortes) ? 0 : 1;
+				}  
+    $replace['#EtatFenetres#'] = $valueEtatFenetres;      
+    $replace['#EtatPortes#'] = $valueEtatPortes;      
     $valuedigicodeDelais = $this->getConfiguration('digicodeDelais');
     $replace['#digicodeDelais#'] = $valuedigicodeDelais;
 
+              $version = $_version;
+        log::add('digicode', 'debug', 'toHtml version: '.$version);
+        if ($_version == 'dplan')
+        {
+          $replace['#background-color#'] = $this->getConfiguration('designBckColor', 'rgba(128, 128, 128, 0)');
 
+        }
     return $this->postToHtml($_version, template_replace($replace, getTemplate('core', $version, 'digicode', 'digicode')));
   }
 
@@ -193,7 +233,26 @@ class digicodeCmd extends cmd {
       foreach ($eqLogics as $digicode) {
         if ($digicode->getIsEnable() == 1) {
           foreach ($digicode->getCmd('info') as $cmd) {
-
+            if(!empty($cmd->getConfiguration('userCode')) && $cmd->getConfiguration('userCode') == $value && $cmd->getConfiguration('masterCode') == 1){
+$cmd_virt = $eqLogic->getCmd(null, 'codemaitre');
+         
+                      $cmd_value = $cmd_virt->execCmd();
+                   log::add('digicode', 'DEBUG', 'test : '. $cmd_value);
+              if($cmd_value == 1){
+                 log::add('digicode', 'DEBUG', 'MasterCode !!!');
+                $eqLogic->checkAndUpdateCmd('codemaitre', '0');
+                $eqLogic->save();
+                $eqLogic->checkAndUpdateCmd('message', 'Désactivation du code maitre');
+                $eqLogic->save();           
+              }else{
+                 log::add('digicode', 'DEBUG', 'MasterCode !!!');                
+                $eqLogic->checkAndUpdateCmd('codemaitre', '1');
+                $eqLogic->save();
+                $eqLogic->checkAndUpdateCmd('message', 'Activation du code maitre');
+                $eqLogic->save();   
+              };
+break;
+            };
             if (!empty($cmd->getConfiguration('userCode')) && $cmd->getConfiguration('userCode') == $code){
               switch ($mode) {
                 case 'P':

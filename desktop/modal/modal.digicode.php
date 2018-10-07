@@ -36,14 +36,21 @@ sendVarToJS('id', $id);
 echo '<table class="table table-bordered table-condensed" style="width: 100%">';
 echo '    <thead>';
 echo '        </tr>';
-echo '            <th style="width: 40%">{{Utilisateur}}</th><th style="width: 35%">{{Code}}</th><th style="width: 25%"></th>';
+echo '            <th style="width: 10%">Code maître</th><th style="width: 40%">{{Utilisateur}}</th><th style="width: 35%">{{Code}}</th><th style="width: 25%"></th>';
 echo '        </tr>';
 
 foreach ($digicode->getCmd('info') as $cmd) {
-    if($cmd->getName() != 'etat' && $cmd->getName() != 'message'){
+    if($cmd->getName() != 'etat' && $cmd->getName() != 'message' && $cmd->getName() != 'codemaitre'){
 
         echo      '<tr class="cmd" data-cmd_id="' . $cmd->getname() . '">';
-        echo '<td>';
+      echo '<td>';
+   if($cmd->getConfiguration('masterCode') == 1){    
+         echo '<input type="checkbox" checked = checked DISABLED/>';           
+   }else{
+             echo '<input type="checkbox" DISABLED/>';    
+   }
+      echo '</td>';
+      echo '<td>';
         echo $cmd->getname();
         echo '</td>';
         echo '<td>';
@@ -74,10 +81,21 @@ $('.bt_Cancel').on('click', function() {
 $('.bt_Modify').on('click', function() {
     var cmdid = $(this).attr('data-id');
     var cmdName = $(this).closest('.cmd').attr('data-cmd_id');
-
-    bootbox.prompt("Nouveau code", function(code){
-
+    
         var code = code;
+        bootbox.prompt("Code", function(code){
+
+ bootbox.prompt({
+  title: "Ce code est-il toujours un code maitre ?",
+  inputType: 'select',
+  inputOptions: [{
+    text: 'Oui',
+    value: '1',
+  }, {
+    text: 'Non',
+    value: '2',
+  }],
+  callback: function(master) {        
         action = 'Modify';
         $.ajax({// fonction permettant de faire de l'ajax
         type: "POST", // methode de transmission des données au fichier php
@@ -87,7 +105,8 @@ $('.bt_Modify').on('click', function() {
             id: id,
             cmdid:cmdid,
             cmdName:cmdName,
-            code: code,
+			code: code,
+            master: master,           
         },
         dataType: 'json',
         error: function (request, status, error) {
@@ -102,7 +121,10 @@ $('.bt_Modify').on('click', function() {
             }
         }
     });
-});
+    
+  }    
+ })   
+});    
 });
 
 $('.bt_Remove').on('click', function() {
@@ -136,11 +158,22 @@ $('.bt_Remove').on('click', function() {
 $('.bt_Add').on('click', function() {
     var cmdid = $(this).attr('data-id');
     var cmdName = $(this).closest('.cmd').attr('data-cmd_id');
-    // var url = "index.php?";
     bootbox.prompt("Utilisateur", function(user){
 
         var code = code;
         bootbox.prompt("Code", function(code){
+ bootbox.prompt({
+  title: "Ce code est-il un code maitre ?",
+  inputType: 'select',
+  inputOptions: [{
+    text: 'Oui',
+    value: '1',
+  }, {
+    text: 'Non',
+    value: '2',
+  }],
+  callback: function(master) {         
+          
             action = 'Add';
             $.ajax({// fonction permettant de faire de l'ajax
             type: "POST", // methode de transmission des données au fichier php
@@ -150,6 +183,7 @@ $('.bt_Add').on('click', function() {
                 id: id,
                 user:user,
                 code: code,
+              	master: master,
             },
             dataType: 'json',
             error: function (request, status, error) {
@@ -164,6 +198,9 @@ $('.bt_Add').on('click', function() {
                 }
             }
         });
+  }   
+     });         
+          
     });
 });
 });

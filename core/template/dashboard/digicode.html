@@ -1,105 +1,104 @@
 <div class="eqLogic-widget eqLogic digicode" style="width: 280px;height: 360px;padding : 0px;border: #border#;border-radius: #border-radius#;background-color: #background-color#;color: #color#;#style#;" data-eqLogic_id="#id#" data-eqLogic_uid="#uid#" data-version="#version#">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <span class="spanConfiguration" style="position : absolute;bottom: 3px;right: 35px;font-size : 2.5em;"><i class="fa fa-gear" title="Configuration utilisateur"></i></span>
   <span class="spanEtatFenetres"></span>
   <span class="spanEtatPortes"></span>
 
 
   <style>
-  .code {
-    margin: 0;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    margin-right: -50%;
-    transform: translate(-50%, -50%) 
+    .code {
+      margin: 0;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      margin-right: -50%;
+      transform: translate(-50%, -50%) 
     }
 
-</style>
+  </style>
 
-<div class="code" data-cmd_id="#value_id#"></div>
-<span class="spanEtat" style="position:absolute; bottom:3px; left:25px; cursor:pointer;"></span>
-<span id="countdowntimer" style="width:100%; text-align:center; position:absolute; bottom:1px; color:red; font-weight:bold; font-size:3em;"></span>
-<span class="spanMessage" style="width:100%; text-align:center; position:absolute; top:10px; color:orange ;font-size:1em">#message#</span>
+  <div class="code" data-cmd_id="#value_id#"></div>
+  <span class="spanEtat" style="position:absolute; bottom:3px; left:25px; cursor:pointer;"></span>
+  <span id="countdowntimer" style="width:100%; text-align:center; position:absolute; bottom:1px; color:red; font-weight:bold; font-size:3em;"></span>
+  <span class="spanMessage" style="width:100%; text-align:center; position:absolute; top:10px; color:orange ;font-size:1em">#message#</span>
 
 
-<script>
-window.location.hash="no-back-button";
-window.location.hash="Again-No-back-button";
-window.onhashchange=function(){window.location.hash="no-back-button";}
+  <script>
+    window.location.hash="no-back-button";
+    window.location.hash="Again-No-back-button";
+    window.onhashchange=function(){window.location.hash="no-back-button";}
 
-$.include([ 'plugins/digicode/core/template/dashboard/css/digicode.css',
-'plugins/digicode/core/template/dashboard/css/digicode.js'
-],
-function() {
-  $('div.code[data-cmd_id="#value_id#"]').digicode(function(code) {
-    jeedom.cmd.execute({
-      id: '#save code_id#',
-      value: { title : '', message: code },
-      success: function(data){
-        var timeleft = #digicodeDelais#;
-        if(data != 0){
-          window.downloadTimer = setInterval(function(){
-            timeleft--;
-            document.getElementById("countdowntimer").style.display = "block";
-            document.getElementById("countdowntimer").textContent = timeleft;
-            if(timeleft <= 0){
-              clearInterval(downloadTimer);
+    $.include([ 'plugins/digicode/core/template/dashboard/css/digicode.css',
+    'plugins/digicode/core/template/dashboard/css/digicode.js'
+    ],
+    function() {
+      $('div.code[data-cmd_id="#value_id#"]').digicode(function(code) {
+        jeedom.cmd.execute({
+          id: '#save code_id#',
+          value: { title : '', message: code },
+          success: function(data){
+            var timeleft = #digicodeDelais#;
+            if(data != 0){
+              window.downloadTimer = setInterval(function(){
+                timeleft--;
+                document.getElementById("countdowntimer").style.display = "block";
+                document.getElementById("countdowntimer").textContent = timeleft;
+                if(timeleft <= 0){
+                  clearInterval(downloadTimer);
+                  document.getElementById("countdowntimer").style.display = "none";
+                  jeedom.cmd.execute({
+                    id: '#exec alarme_id#',
+                    value: { title : '', message: data },
+                  })
+                }
+              },1000);
+            }
+            if(data === '0'){
+              clearInterval(window.downloadTimer);
               document.getElementById("countdowntimer").style.display = "none";
               jeedom.cmd.execute({
                 id: '#exec alarme_id#',
                 value: { title : '', message: data },
               })
+
             }
-          },1000);
-        }
-        if(data === '0'){
-          clearInterval(window.downloadTimer);
-          document.getElementById("countdowntimer").style.display = "none";
-          jeedom.cmd.execute({
-            id: '#exec alarme_id#',
-            value: { title : '', message: data },
-          })
+          }
+        });
+      }, 4);
+    }
+    );
 
-        }
-      }
+    if ('#codemaitre#' == 1) {
+      $('.eqLogic[data-eqLogic_uid=#uid#] .spanConfiguration').hide();
+    }
+    if ('#etat#' == 1) {
+      $('.eqLogic[data-eqLogic_uid=#uid#] .spanEtat').append('<img src="plugins/digicode/core/template/dashboard/img/total.png" height="50px" width="50px" />');
+      $('.eqLogic[data-eqLogic_uid=#uid#] .spanConfiguration').hide();
+    }
+    if ('#etat#' == 2) {
+      $('.eqLogic[data-eqLogic_uid=#uid#] .spanEtat').append('<img src="plugins/digicode/core/template/dashboard/img/partiel.png" height="50px" width="50px" />');
+      $('.eqLogic[data-eqLogic_uid=#uid#] .spanConfiguration').hide();
+    }
+    if ('#etat#' == 0) {
+      $('.eqLogic[data-eqLogic_uid=#uid#] .spanEtat').append('<img src="plugins/digicode/core/template/dashboard/img/desactive.png" height="50px" width="50px" />');
+    }
+    if ('#EtatFenetres#' == 0) {
+      $('.eqLogic[data-eqLogic_uid=#uid#] .spanEtatFenetres').append('<i class="jeedom-fenetre-ferme" title="Fenêtres fermées" style="position : absolute;top: 5px;left: 5px; font-size : 1.5em;"></i>');
+    }
+    if ('#EtatFenetres#' == 1) {
+      $('.eqLogic[data-eqLogic_uid=#uid#] .spanEtatFenetres').append('<i class="jeedom-fenetre-ouverte" title="Fenêtres ouvertes" style="color:red; position : absolute;top: 5px;left: 5px; font-size : 1.5em;"></i>');
+    }
+    if ('#EtatPortes#' == 0) {
+      $('.eqLogic[data-eqLogic_uid=#uid#] .spanEtatPortes').append('<i class="jeedom-porte-ferme" title="Portes fermées" style="; position : absolute;top: 5px;left: 30px; font-size : 1.5em;"></i>');
+    }
+    if ('#EtatPortes#' == 1) {
+      $('.eqLogic[data-eqLogic_uid=#uid#] .spanEtatPortes').append('<i class="jeedom-porte-ouverte" title="Portes ouvertes" style="color:red; position : absolute;top: 5px;left: 30px; font-size : 1.5em;"></i>');
+    }
+    $('.eqLogic[data-eqLogic_uid=#uid#] .spanConfiguration').on('click', function () {
+      $('#md_modal').dialog({
+        MaxWidth: 300,
+      });
+      $('#md_modal').load('index.php?v=d&plugin=digicode&modal=modal.digicode&id=#id#').dialog('open');
     });
-  }, 4);
-}
-);
 
-if ('#codemaitre#' == 1) {
-  $('.eqLogic[data-eqLogic_uid=#uid#] .spanConfiguration').hide();
-}
-if ('#etat#' == 1) {
-  $('.eqLogic[data-eqLogic_uid=#uid#] .spanEtat').append('<img src="plugins/digicode/core/template/dashboard/img/total.png" height="50px" width="50px" />');
-  $('.eqLogic[data-eqLogic_uid=#uid#] .spanConfiguration').hide();
-}
-if ('#etat#' == 2) {
-  $('.eqLogic[data-eqLogic_uid=#uid#] .spanEtat').append('<img src="plugins/digicode/core/template/dashboard/img/partiel.png" height="50px" width="50px" />');
-  $('.eqLogic[data-eqLogic_uid=#uid#] .spanConfiguration').hide();
-}
-if ('#etat#' == 0) {
-  $('.eqLogic[data-eqLogic_uid=#uid#] .spanEtat').append('<img src="plugins/digicode/core/template/dashboard/img/desactive.png" height="50px" width="50px" />');
-}
-if ('#EtatFenetres#' == 0) {
-  $('.eqLogic[data-eqLogic_uid=#uid#] .spanEtatFenetres').append('<i class="jeedom-fenetre-ferme" title="Fenêtres fermées" style="position : absolute;top: 5px;left: 5px; font-size : 1.5em;"></i>');
-}
-if ('#EtatFenetres#' == 1) {
-  $('.eqLogic[data-eqLogic_uid=#uid#] .spanEtatFenetres').append('<i class="jeedom-fenetre-ouverte" title="Fenêtres ouvertes" style="color:red; position : absolute;top: 5px;left: 5px; font-size : 1.5em;"></i>');
-}
-if ('#EtatPortes#' == 0) {
-  $('.eqLogic[data-eqLogic_uid=#uid#] .spanEtatPortes').append('<i class="jeedom-porte-ferme" title="Portes fermées" style="; position : absolute;top: 5px;left: 30px; font-size : 1.5em;"></i>');
-}
-if ('#EtatPortes#' == 1) {
-  $('.eqLogic[data-eqLogic_uid=#uid#] .spanEtatPortes').append('<i class="jeedom-porte-ouverte" title="Portes ouvertes" style="color:red; position : absolute;top: 5px;left: 30px; font-size : 1.5em;"></i>');
-}
-$('.eqLogic[data-eqLogic_uid=#uid#] .spanConfiguration').on('click', function () {
-  $('#md_modal').dialog({
-    MaxWidth: 300,
-  });
-  $('#md_modal').load('index.php?v=d&plugin=digicode&modal=modal.digicode&id=#id#').dialog('open');
-});
-
-</script>
+  </script>
 </div>

@@ -151,9 +151,12 @@ $eqLogics = eqLogic::byType($plugin->getId());
                                 </span>
                             </div>
                         </div>
-                      <div class="col-sm-1 has-success">
-                      <label><input type="checkbox" class="eqLogicAttr configuration " data-l1key="configuration" data-l2key="invertDigicodeEtatPortes"/>{{Inverser}}</label>
-                       </div>                        
+                        <div class="col-sm-1 has-success">
+                            <label><input type="checkbox" class="eqLogicAttr configuration" data-l1key="configuration" data-l2key="ActivateEtatPortes"/>{{Activation}}</label>
+                        </div>
+                        <div class="col-sm-1 has-success">
+                            <label><input type="checkbox" class="eqLogicAttr configuration" data-l1key="configuration" data-l2key="invertDigicodeEtatPortes"/>{{Inverser}}</label>
+                        </div>
                         <label class="col-sm-4 control-label">{{Etat des fenêtres}}</label>
                         <div class="col-sm-6">
                             <div class="input-group">
@@ -163,35 +166,38 @@ $eqLogics = eqLogic::byType($plugin->getId());
                                 </span>
                             </div>
                         </div>
-                      <div class="col-sm-1 has-success">
-                      <label><input type="checkbox" class="eqLogicAttr configuration" data-l1key="configuration" data-l2key="invertdigicodeEtatFenetres"/>{{Inverser}}</label>
-                       </div>                    
+                        <div class="col-sm-1 has-success">
+                            <label><input type="checkbox" class="eqLogicAttr configuration" data-l1key="configuration" data-l2key="ActivateEtatFenetres"/>{{Activation}}</label>
+                        </div>
+                        <div class="col-sm-1 has-success">
+                            <label><input type="checkbox" class="eqLogicAttr configuration" data-l1key="configuration" data-l2key="invertdigicodeEtatFenetres"/>{{Inverser}}</label>
+                        </div>
                         <label class="col-sm-4 control-label">{{Délais}}</label>
                         <div class="col-sm-6">
                             <input type="text" class="eqLogicAttr configuration form-control" data-l1key="configuration" data-l2key="digicodeDelais" />
                         </div>
 
 
-                </fieldset>
-            </form>
-        </div>
+                    </fieldset>
+                </form>
+            </div>
 
 
 
-        <div role="tabpanel" class="tab-pane" id="commandtab">
-            <a class="btn btn-success btn-sm cmdAction pull-right" data-action="add" style="margin-top:5px;"><i class="fa fa-plus-circle"></i> {{Commandes}}</a><br/><br/>
-            <table id="table_cmd" class="table table-bordered table-condensed">
-                <thead>
-                    <tr>
-                        <th>{{Nom}}</th><th>{{Code}}</th><th>{{Type}}</th><th>{{Action}}</th>
-                    </tr>
-                </thead>
-                <tbody>
-                </tbody>
-            </table>
+            <div role="tabpanel" class="tab-pane" id="commandtab">
+                <a class="btn btn-success btn-sm cmdAction pull-right" data-action="add" style="margin-top:5px;"><i class="fa fa-plus-circle"></i> {{Commandes}}</a><br/><br/>
+                <table id="table_cmd" class="table table-bordered table-condensed">
+                    <thead>
+                        <tr>
+                            <th>{{Nom}}</th><th>{{Code}}</th><th>{{Type}}</th><th>{{Action}}</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
-</div>
 </div>
 
 <?php include_file('desktop', 'digicode', 'js', 'digicode');?>

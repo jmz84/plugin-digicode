@@ -76,3 +76,9 @@ Changelog
 - Ajout transparence sur design
 - Ajout code maitre pour vérouiller la configuration du widget
 - Ajout possibilité d'inverser l'état des ouvrants
+
+### Version 1.2 (version market )
+- Ajout d'une fonction permettant d'activer/désactiver le test des ouvrants
+- Correction du comportement du widget (bug zoom)
+- Ajout d'une fonction permettant d'actualiser le widget lors de l'activation de l'alarme hors plugin
+- Amélioration de l'assistant de création des codes (code vide rejeté)

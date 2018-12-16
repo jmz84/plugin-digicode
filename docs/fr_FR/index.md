@@ -21,8 +21,7 @@ Pour utiliser ce plugin il faut disposer des commandes suivantes :
 - Etat de l'alarme de l'alarme
 - Activation Totale de l'alarme
 - Activation Partielle
-- Etat des portes
-- Etat des fenêtres
+- Désactivation de l'alarme
 
 Configuration
 ===
@@ -66,6 +65,7 @@ Après avoir cliqué sur l'icone, une fenêtre s'ouvre et permet la gestion des 
 ### Utilisation du widget
 
 Le widget comporte plusieurs éléments :
+
 ![utilisateurs](../images/widget2.png)
 
 - 1 : Etat des ouvrants
@@ -77,8 +77,8 @@ Le widget comporte plusieurs éléments :
 - 7 : Mode de l'Alarme
 - 8 : Nombre de chiffre rentré
 
-Pour activer ou désactiver l'alarme, il suffit de taper un code utilisateur (4 chiffres) + la lettre correspondante au mode d'alarme (P : mode partiel, T : mode totale, D : mode désactivé)
-Pour activer ou désactiver le code maitre, il suffit de taper un code maitre (5 chiffres)
+Pour activer ou désactiver l'alarme, il suffit de taper un code utilisateur (4 chiffres) + la lettre correspondante au mode d'alarme (P : mode partiel, T : mode totale, D : mode désactivé).
+Pour activer ou désactiver le code maitre, il suffit de taper un code maitre (5 chiffres).
 
 Changelog
 ===

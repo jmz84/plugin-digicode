@@ -65,6 +65,7 @@ Après avoir cliqué sur l'icone, une fenêtre s'ouvre et permet la gestion des 
 ### Utilisation du widget
 
 Le widget comporte plusieurs éléments :
+
 ![utilisateurs](../images/widget2.png)
 
 - 1 : Etat des ouvrants

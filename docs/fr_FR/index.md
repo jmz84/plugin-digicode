@@ -21,8 +21,7 @@ Pour utiliser ce plugin il faut disposer des commandes suivantes :
 - Etat de l'alarme de l'alarme
 - Activation Totale de l'alarme
 - Activation Partielle
-- Etat des portes
-- Etat des fenêtres
+- Désactivation de l'alarme
 
 Configuration
 ===
@@ -47,9 +46,13 @@ Il faut ensuite donner les informations de votre alarme.
 - 4 : La commande qui déactive l'alarme
 - 5 et 6 : Les commandes qui fournie le statut des ouvrants (virtuel généré par le résumé domotique)
 - 7 : Délais d'activation
+- 8 : Activation de l'état des ouvrants
+- 9 : Inversion de l'état des ouvrants
 
 ### Création des utilisateurs
 La création, la modification et la suppression des utilisateurs se fait directement depuis le widget en cliquant sur la roue crantée qui se situe en bas à droite.
+Le code utilisateur est basé sur 4 chiffres
+Le code maitre est basé sur 5 chiffres.
 
 ![configuration](../images/configuration.png)
 
@@ -59,7 +62,35 @@ Après avoir cliqué sur l'icone, une fenêtre s'ouvre et permet la gestion des 
 
 ![utilisateurs](../images/utilisateurs.png)
 
+### Utilisation du widget
+
+Le widget comporte plusieurs éléments :
+![utilisateurs](../images/widget2.png)
+
+- 1 : Etat des ouvrants
+- 2 : Message
+- 3 : Etat de l'alarme
+- 4 : Compte à rebours
+- 5 : Panneau pour la création des codes
+- 6 : Effacement des chiffres rentrés
+- 7 : Mode de l'Alarme
+- 8 : Nombre de chiffre rentré
+
+Pour activer ou désactiver l'alarme, il suffit de taper un code utilisateur (4 chiffres) + la lettre correspondante au mode d'alarme (P : mode partiel, T : mode totale, D : mode désactivé)
+Pour activer ou désactiver le code maitre, il suffit de taper un code maitre (5 chiffres)
+
 Changelog
 ===
-### Version 1.0 (version market 2018-09-09 10:10:00)
-- Version initiale
+### Version 1.0 (version market 2018-08-19 22:01:25)
+- Verion initiale
+
+### Version 1.1 (version market 2018-10-07 22:01:25)
+- Ajout transparence sur design
+- Ajout code maitre pour vérouiller la configuration du widget
+- Ajout possibilité d'inverser l'état des ouvrants
+
+### Version 1.2 (version market )
+- Ajout d'une fonction permettant d'activer/désactiver le test des ouvrants
+- Correction du comportement du widget (bug zoom)
+- Ajout d'une fonction permettant d'actualiser le widget lors de l'activation de l'alarme hors plugin
+- Amélioration de l'assistant de création des codes (code vide rejeté)

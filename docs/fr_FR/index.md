@@ -47,7 +47,8 @@ Il faut ensuite donner les informations de votre alarme.
 - 4 : La commande qui déactive l'alarme
 - 5 et 6 : Les commandes qui fournie le statut des ouvrants (virtuel généré par le résumé domotique)
 - 7 : Délais d'activation
-8 - Inversion de l'état des ouvrants
+- 8 : Activation de l'état des ouvrants
+- 9 : Inversion de l'état des ouvrants
 
 ### Création des utilisateurs
 La création, la modification et la suppression des utilisateurs se fait directement depuis le widget en cliquant sur la roue crantée qui se situe en bas à droite.
@@ -62,9 +63,21 @@ Après avoir cliqué sur l'icone, une fenêtre s'ouvre et permet la gestion des 
 
 ![utilisateurs](../images/utilisateurs.png)
 
-### Utilisation
+### Utilisation du widget
 
-Pour activer ou désactiver l'alarme, il suffit de taper un code utilisateur (4 chiffres) + la lettre correspondante au mode d'alarme
+Le widget comporte plusieurs éléments :
+![utilisateurs](../images/widget2.png)
+
+- 1 : Etat des ouvrants
+- 2 : Message
+- 3 : Etat de l'alarme
+- 4 : Compte à rebours
+- 5 : Panneau pour la création des codes
+- 6 : Effacement des chiffres rentrés
+- 7 : Mode de l'Alarme
+- 8 : Nombre de chiffre rentré
+
+Pour activer ou désactiver l'alarme, il suffit de taper un code utilisateur (4 chiffres) + la lettre correspondante au mode d'alarme (P : mode partiel, T : mode totale, D : mode désactivé)
 Pour activer ou désactiver le code maitre, il suffit de taper un code maitre (5 chiffres)
 
 Changelog

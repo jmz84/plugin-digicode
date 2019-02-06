@@ -53,11 +53,11 @@ class digicode extends eqLogic {
         $invertEtatPortes = $eqLogic->getConfiguration('invertDigicodeEtatPortes');
         $ActivateEtatPortes = $eqLogic->getConfiguration('ActivateEtatPortes');
         $ActivateEtatFenetres = $eqLogic->getConfiguration('ActivateEtatFenetres');
-      	$Name = $eqLogic->getName();
+        $Name = $eqLogic->getName();
 
         if (!empty($ActivateEtatPortes)) {
-        $etatPortes = cmd::byString($eqLogic->getConfiguration('digicodeEtatPortes'));
-        $valueEtatPortes  = $etatPortes->execCmd();
+            $etatPortes = cmd::byString($eqLogic->getConfiguration('digicodeEtatPortes'));
+            $valueEtatPortes  = $etatPortes->execCmd();
             if (isset($invertEtatPortes) && $invertEtatPortes == 1) {
                 $valueEtatPortes = ($valueEtatPortes == 1 || $valueEtatPortes) ? 0 : 1;
             }
@@ -65,8 +65,8 @@ class digicode extends eqLogic {
 
 
         if (!empty($ActivateEtatFenetres)) {
-        $etatFenetres = cmd::byString($eqLogic->getConfiguration('digicodeEtatFenetres'));
-        $valueEtatFenetres  = $etatFenetres->execCmd();
+            $etatFenetres = cmd::byString($eqLogic->getConfiguration('digicodeEtatFenetres'));
+            $valueEtatFenetres  = $etatFenetres->execCmd();
             if (isset($invertEtatFenetres) && $invertEtatFenetres == 1) {
                 $valueEtatFenetres = ($valueEtatFenetres == 1 || $valueEtatFenetres) ? 0 : 1;
             }
@@ -253,10 +253,6 @@ class digicode extends eqLogic {
             $replace['#EtatPortes#'] = $valueEtatPortes;
         }
 
-
-
-
-
         $valuedigicodeDelais = $this->getConfiguration('digicodeDelais');
         $replace['#digicodeDelais#'] = $valuedigicodeDelais;
 
@@ -318,6 +314,8 @@ class digicodeCmd extends cmd {
                                 $returnCheck = $eqLogic->checkandactivate($mode,$eqLogic);
                                 if( $returnCheck ==1){
                                     log::add('digicode', 'DEBUG', 'Activation de l\'alarme partielle par l\'utilisateur '. $cmd->getName() . ' (Code utilisé ' .$cmd->getConfiguration('userCode') .')' );
+                                    $eqLogic->checkAndUpdateCmd('message', 'Dernière activation par '. $cmd->getName());
+                                    $eqLogic->save();
                                     return 2;
                                 }
                                 break;
@@ -326,6 +324,8 @@ class digicodeCmd extends cmd {
                                 $returnCheck =$eqLogic->checkandactivate($mode,$eqLogic);
                                 if( $returnCheck ==1){
                                     log::add('digicode', 'DEBUG', 'Activation de l\'alarme totale par l\'utilisateur '. $cmd->getName() . ' (Code utilisé ' .$cmd->getConfiguration('userCode') .')' );
+                                    $eqLogic->checkAndUpdateCmd('message', 'Dernière activation par '. $cmd->getName());
+                                    $eqLogic->save();
                                     return 1;
                                 }
                                 break;
@@ -336,14 +336,13 @@ class digicodeCmd extends cmd {
                                 $cmd2->execCmd();
                                 $eqLogic->checkAndUpdateCmd('etat', '0');
                                 $eqLogic->save();
-                                $eqLogic->checkAndUpdateCmd('message', '');
+                                $eqLogic->checkAndUpdateCmd('message', 'Dernière désactivation par '. $cmd->getName());
                                 $eqLogic->save();
                                 return 0;
                                 break;
 
                             }
                         } elseif (!empty($cmd->getConfiguration('userCode')) && $cmd->getConfiguration('userCode') != $code){
-                            log::add('digicode', 'DEBUG', 'Code erroné');
                             $eqLogic->checkAndUpdateCmd('message', 'Code erroné');
                             $eqLogic->save();
                         }

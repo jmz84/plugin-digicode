@@ -49,37 +49,28 @@ class digicode extends eqLogic {
     {
         $etatAlarme =  cmd::byString($eqLogic->getConfiguration('digicodeCmdStatus'));
         $valueEtatAlarme  = $etatAlarme->execCmd();
-        $etatFenetres = cmd::byString($eqLogic->getConfiguration('digicodeEtatFenetres'));
-        $valueEtatFenetres  = $etatFenetres->execCmd();
-        $etatPortes = cmd::byString($eqLogic->getConfiguration('digicodeEtatPortes'));
-        $valueEtatPortes  = $etatPortes->execCmd();
         $invertEtatFenetres = $eqLogic->getConfiguration('invertdigicodeEtatFenetres');
         $invertEtatPortes = $eqLogic->getConfiguration('invertDigicodeEtatPortes');
         $ActivateEtatPortes = $eqLogic->getConfiguration('ActivateEtatPortes');
         $ActivateEtatFenetres = $eqLogic->getConfiguration('ActivateEtatFenetres');
-        $Etatinitialferme = 0;
-        $Etatinitialouvert = 1;
+      	$Name = $eqLogic->getName();
 
-        if (isset($ActivateEtatPortes) && $ActivateEtatPortes == 1) {
+        if (!empty($ActivateEtatPortes)) {
+        $etatPortes = cmd::byString($eqLogic->getConfiguration('digicodeEtatPortes'));
+        $valueEtatPortes  = $etatPortes->execCmd();
             if (isset($invertEtatPortes) && $invertEtatPortes == 1) {
                 $valueEtatPortes = ($valueEtatPortes == 1 || $valueEtatPortes) ? 0 : 1;
-                $Etatinitialferme = ($Etatinitialferme == 0 || $Etatinitialferme) ? 0 : 1;
-                $Etatinitialouvert = ($Etatinitialouvert == 1 || $Etatinitialouvert) ? 0 : 1;
             }
         }
 
-        if (isset($ActivateEtatFenetres) && $ActivateEtatFenetres == 1) {
+
+        if (!empty($ActivateEtatFenetres)) {
+        $etatFenetres = cmd::byString($eqLogic->getConfiguration('digicodeEtatFenetres'));
+        $valueEtatFenetres  = $etatFenetres->execCmd();
             if (isset($invertEtatFenetres) && $invertEtatFenetres == 1) {
                 $valueEtatFenetres = ($valueEtatFenetres == 1 || $valueEtatFenetres) ? 0 : 1;
-                $Etatinitialferme = ($Etatinitialferme == 0 || $Etatinitialferme) ? 0 : 1;
-                $Etatinitialouvert = ($Etatinitialouvert == 1 || $Etatinitialouvert) ? 0 : 1;
             }
         }
-
-
-
-
-
 
         if($valueEtatFenetres == 1 && $valueEtatPortes == 0){
             log::add('digicode', 'DEBUG', 'Au moins une fenêtre est restée ouverte !');
@@ -99,11 +90,8 @@ class digicode extends eqLogic {
             $eqLogic->save();
         }else{
             log::add('digicode', 'DEBUG', 'Tout est ok pour l\'activation');
-            $eqLogic->checkAndUpdateCmd('message', '');
-            $eqLogic->save();
             return true;
         }
-
     }
 
 

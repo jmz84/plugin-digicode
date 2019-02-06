@@ -40,6 +40,7 @@ try {
       $cmdName = init('cmdName');
       ajax::success(digicode::RemoveUser($id,$cmdid,$cmdName));
       break;
+
       case 'Add':
       $id  = init('id');
       $user = init('user');

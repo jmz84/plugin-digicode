@@ -7,7 +7,7 @@ Ce plugin permet d'afficher un digicode logiciel pour piloter une alarme.
 
 Il inclut les fonctionnalités suivantes :
 
-- Timer (configurable) avant activation de l'alarme
+- Compte à rebours (configurable) avant activation de l'alarme
 - Test des ouvrants avant activation
 - Test de l'état de l'alarme avant activation
 - Message sur état
@@ -16,7 +16,7 @@ Il inclut les fonctionnalités suivantes :
 Installation
 ===
 
-### Pré-requis
+### Prérequis
 Pour utiliser ce plugin il faut disposer des commandes suivantes :
 - Etat de l'alarme de l'alarme
 - Activation Totale de l'alarme
@@ -43,7 +43,7 @@ Il faut ensuite donner les informations de votre alarme.
 - 1 : La commande qui fournie le statut de l'alarme
 - 2 : La commande qui active le mode Total
 - 3 : La commande qui active le mode Partiel
-- 4 : La commande qui déactive l'alarme
+- 4 : La commande qui désactive l'alarme
 - 5 et 6 : Les commandes qui fournie le statut des ouvrants (virtuel généré par le résumé domotique)
 - 7 : Délais d'activation
 - 8 : Activation de l'état des ouvrants
@@ -56,7 +56,7 @@ Le code maitre est basé sur 5 chiffres.
 
 ![configuration](../images/configuration.png)
 
-NB : cette icone est inaccessible lorsque l'arlame est activée.
+NB : cette icone est inaccessible lorsque l'alarme est activée.
 
 Après avoir cliqué sur l'icone, une fenêtre s'ouvre et permet la gestion des comptes.
 
@@ -83,15 +83,19 @@ Pour activer ou désactiver le code maitre, il suffit de taper un code maitre (5
 Changelog
 ===
 ### Version 1.0 (version market 2018-08-19 22:01:25)
-- Verion initiale
+- Version initiale
 
 ### Version 1.1 (version market 2018-10-07 22:01:25)
 - Ajout transparence sur design
-- Ajout code maitre pour vérouiller la configuration du widget
+- Ajout code maitre pour verrouiller la configuration du widget
 - Ajout possibilité d'inverser l'état des ouvrants
 
-### Version 1.2 (version market )
+### Version 1.2 (version market 2018-12-16 12:14:41)
 - Ajout d'une fonction permettant d'activer/désactiver le test des ouvrants
 - Correction du comportement du widget (bug zoom)
 - Ajout d'une fonction permettant d'actualiser le widget lors de l'activation de l'alarme hors plugin
 - Amélioration de l'assistant de création des codes (code vide rejeté)
+
+### Version 1.3 (version market en cours)
+- Correction d'un bug sur l'activation/désactivation des ouvrants
+- Ajout du nom de l'utilisateur qui active/désactive l'alarme

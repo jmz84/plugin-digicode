@@ -47,14 +47,13 @@ class digicode extends eqLogic {
 
     public static function checkandactivate($mode,$eqLogic)
     {
-        $etatAlarme =  cmd::byString($eqLogic->getConfiguration('digicodeCmdStatus'));
-        $valueEtatAlarme  = $etatAlarme->execCmd();
+        $etatAlarme = digicodeCmd::byEqLogicIdAndLogicalId($eqLogic->getId(),'etat')->execCmd();
         $invertEtatFenetres = $eqLogic->getConfiguration('invertdigicodeEtatFenetres');
         $invertEtatPortes = $eqLogic->getConfiguration('invertDigicodeEtatPortes');
         $ActivateEtatPortes = $eqLogic->getConfiguration('ActivateEtatPortes');
         $ActivateEtatFenetres = $eqLogic->getConfiguration('ActivateEtatFenetres');
         $Name = $eqLogic->getName();
-
+            log::add('digicode', 'DEBUG', 'Valeur alarme '.$etatAlarme);
         if (!empty($ActivateEtatPortes)) {
             $etatPortes = cmd::byString($eqLogic->getConfiguration('digicodeEtatPortes'));
             $valueEtatPortes  = $etatPortes->execCmd();
@@ -75,23 +74,21 @@ class digicode extends eqLogic {
         if($valueEtatFenetres == 1 && $valueEtatPortes == 0){
             log::add('digicode', 'DEBUG', 'Au moins une fenêtre est restée ouverte !');
             $eqLogic->checkAndUpdateCmd('message', 'Fenetre(s) ouverte(s)');
-            $eqLogic->save();
         }elseif($valueEtatPortes == 1 && $valueEtatFenetres == 0){
             log::add('digicode', 'DEBUG', 'Au moins une porte est restée ouverte !');
             $eqLogic->checkAndUpdateCmd('message', 'Porte(s) ouverte(s)');
-            $eqLogic->save();
         }elseif($valueEtatPortes == 1 && $valueEtatFenetres == 1){
             log::add('digicode', 'DEBUG', 'Au moins une porte est restée ouverte !');
-            $eqLogic->checkAndUpdateCmd('message', 'Porte(s) et Fenêtre(s) ouverte(s)');
-            $eqLogic->save();
-        }elseif($valueEtatAlarme ==1){
+           $eqLogic->checkAndUpdateCmd('message', 'Porte(s) et Fenêtre(s) ouverte(s)');
+        }elseif($etatAlarme == 1 || $etatAlarme == 2){
             log::add('digicode', 'DEBUG', 'Alarme déjà active !');
             $eqLogic->checkAndUpdateCmd('message', 'Alarme déjà active');
-            $eqLogic->save();
         }else{
             log::add('digicode', 'DEBUG', 'Tout est ok pour l\'activation');
             return true;
+
         }
+      		$eqLogic->refreshWidget();
     }
 
 
@@ -188,6 +185,7 @@ class digicode extends eqLogic {
             $digicodeCmd->setLogicalId('message');
             $digicodeCmd->setType('info');
             $digicodeCmd->setSubType('string');
+
         }
         $digicodeCmd->setConfiguration('type', 'cmdwiget');
         $digicodeCmd->save();
@@ -215,13 +213,11 @@ class digicode extends eqLogic {
         if (!is_array($replace)) {
             return $replace;
         }
+
         $version = jeedom::versionAlias($_version);
         foreach ($this->getCmd('info') as $cmd) {
             $replace['#' . $cmd->getLogicalId() . '#']    = $cmd->execCmd();
             $replace['#' . $cmd->getLogicalId() . '_id#'] = $cmd->getId();
-            if ($cmd->getIsHistorized() == 1) {
-                $replace['#' . $cmd->getLogicalId() . '_history#'] = 'history cursor';
-            }
         }
 
         foreach ($this->getCmd('action') as $cmd) {
@@ -254,10 +250,10 @@ class digicode extends eqLogic {
         }
 
         $valuedigicodeDelais = $this->getConfiguration('digicodeDelais');
-        $replace['#digicodeDelais#'] = $valuedigicodeDelais;
+        $replace['#digicodeDelais#'] = $valuedigicodeDelais+1;
+
 
         $version = $_version;
-        log::add('digicode', 'debug', 'toHtml version: '.$version);
         if ($_version == 'dplan')
         {
             $replace['#background-color#'] = $this->getConfiguration('designBckColor', 'rgba(128, 128, 128, 0)');
@@ -296,15 +292,11 @@ class digicodeCmd extends cmd {
                             if($cmd_value == 1){
                                 log::add('digicode', 'DEBUG', 'MasterCode !!!');
                                 $eqLogic->checkAndUpdateCmd('codemaitre', '0');
-                                $eqLogic->save();
                                 $eqLogic->checkAndUpdateCmd('message', 'Désactivation du code maitre');
-                                $eqLogic->save();
                             }else{
                                 log::add('digicode', 'DEBUG', 'MasterCode !!!');
                                 $eqLogic->checkAndUpdateCmd('codemaitre', '1');
-                                $eqLogic->save();
                                 $eqLogic->checkAndUpdateCmd('message', 'Activation du code maitre');
-                                $eqLogic->save();
                             };
                             break;
                         };
@@ -315,7 +307,6 @@ class digicodeCmd extends cmd {
                                 if( $returnCheck ==1){
                                     log::add('digicode', 'DEBUG', 'Activation de l\'alarme partielle par l\'utilisateur '. $cmd->getName() . ' (Code utilisé ' .$cmd->getConfiguration('userCode') .')' );
                                     $eqLogic->checkAndUpdateCmd('message', 'Dernière activation par '. $cmd->getName());
-                                    $eqLogic->save();
                                     return 2;
                                 }
                                 break;
@@ -325,7 +316,6 @@ class digicodeCmd extends cmd {
                                 if( $returnCheck ==1){
                                     log::add('digicode', 'DEBUG', 'Activation de l\'alarme totale par l\'utilisateur '. $cmd->getName() . ' (Code utilisé ' .$cmd->getConfiguration('userCode') .')' );
                                     $eqLogic->checkAndUpdateCmd('message', 'Dernière activation par '. $cmd->getName());
-                                    $eqLogic->save();
                                     return 1;
                                 }
                                 break;
@@ -335,17 +325,15 @@ class digicodeCmd extends cmd {
                                 $cmd2 = cmd::byString($cmdAlarmeDesactive);
                                 $cmd2->execCmd();
                                 $eqLogic->checkAndUpdateCmd('etat', '0');
-                                $eqLogic->save();
-                                $eqLogic->checkAndUpdateCmd('message', 'Dernière désactivation par '. $cmd->getName());
-                                $eqLogic->save();
+                               $eqLogic->checkAndUpdateCmd('message', 'Dernière désactivation par '. $cmd->getName());
+				                $eqLogic->refreshWidget();
                                 return 0;
                                 break;
-
                             }
                         } elseif (!empty($cmd->getConfiguration('userCode')) && $cmd->getConfiguration('userCode') != $code){
                             $eqLogic->checkAndUpdateCmd('message', 'Code erroné');
-                            $eqLogic->save();
                         }
+
                     }
                 }
             }
@@ -361,30 +349,26 @@ class digicodeCmd extends cmd {
                 $cmd = cmd::byString($cmdAlarmetotal);
                 $cmd->execCmd();
                 $eqLogic->checkAndUpdateCmd('etat', '1');
-                $eqLogic->save();
             }
             if($value == 2){
 
                 $cmd = cmd::byString($cmdAlarmePartiel);
                 $cmd->execCmd();
                 $eqLogic->checkAndUpdateCmd('etat', '2');
-                $eqLogic->save();
             }
+				$eqLogic->refreshWidget();
             break;
 
             case 'Mode désactivé':
             $eqLogic->checkAndUpdateCmd('etat', '0');
-            $eqLogic->save();
             break;
 
             case 'Mode partiel':
             $eqLogic->checkAndUpdateCmd('etat', '2');
-            $eqLogic->save();
             break;
 
             case 'Mode total':
             $eqLogic->checkAndUpdateCmd('etat', '1');
-            $eqLogic->save();
             break;
         }
 

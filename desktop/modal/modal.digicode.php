@@ -36,7 +36,7 @@ sendVarToJS('id', $id);
         echo '<table class="table table-bordered table-condensed" style="width: 100%">';
         echo '<thead>';
         echo '</tr>';
-        echo '<th style="width: 10%">Code maître</th><th style="width: 40%">{{Utilisateur}}</th><th style="width: 35%">{{Code}}</th><th style="width: 25%"></th>';
+        echo '<th style="width: 10%">Maître</th><th style="width: 20%">{{Utilisateur}}</th><th style="width: 20%">{{Code}}</th><th style="width: 25%"></th>';
         echo '</tr>';
 
 foreach ($digicode->getCmd('info') as $cmd) {
@@ -79,16 +79,16 @@ $('.bt_Cancel').on('click', function() {
     $('#md_modal').dialog("close");
 });
 $('.bt_Modify').on('click', function() {
+    $('#md_modal').dialog("close");
     var cmdid = $(this).attr('data-id');
     var cmdName = $(this).closest('.cmd').attr('data-cmd_id');
-
     var code = code;
     bootbox.prompt({title:"Code", inputType: "password", callback: function(code){
         if (code === null) {
             bootbox.alert("Le code est obligatoire. <br> Opération de création annulée !");
         }else{
             bootbox.prompt({
-                title: "Ce code est-il toujours un code maitre ?",
+                title: "Ce code est-il un code maitre ?",
                 inputType: 'select',
                 inputOptions: [{
                     text: 'Oui',
@@ -163,10 +163,10 @@ $('.bt_Remove').on('click', function() {
 });
 
 $('.bt_Add').on('click', function() {
+    $('#md_modal').dialog("close");
     var cmdid = $(this).attr('data-id');
     var cmdName = $(this).closest('.cmd').attr('data-cmd_id');
     bootbox.prompt({title:"Utilisateur", callback:function(user){
-
         var code = code;
         bootbox.prompt({title:"Code", inputType: "password", callback: function(code){
             if (code === null) {

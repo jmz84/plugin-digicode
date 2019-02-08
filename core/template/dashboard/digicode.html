@@ -23,10 +23,6 @@
 
 
   <script>
-    window.location.hash="no-back-button";
-    window.location.hash="Again-No-back-button";
-    window.onhashchange=function(){window.location.hash="no-back-button";}
-
     $.include([ 'plugins/digicode/core/template/dashboard/css/digicode.css',
     'plugins/digicode/core/template/dashboard/css/digicode.js'
     ],
@@ -66,7 +62,6 @@
       }, 4);
     }
     );
-
     if ('#codemaitre#' == 1) {
       $('.eqLogic[data-eqLogic_uid=#uid#] .spanConfiguration').hide();
     }
@@ -93,9 +88,15 @@
     if ('#EtatPortes#' == 1) {
       $('.eqLogic[data-eqLogic_uid=#uid#] .spanEtatPortes').append('<i class="jeedom-porte-ouverte" title="Portes ouvertes" style="color:red; position : absolute;top: 5px;left: 30px; font-size : 1.5em;"></i>');
     }
+
+
     $('.eqLogic[data-eqLogic_uid=#uid#] .spanConfiguration').on('click', function () {
       $('#md_modal').dialog({
-        MaxWidth: 300,
+                    maxWidth: 300,
+                    maxHeight: 400,
+                    width: 300,
+                    height: 400,
+                    modal: true,
       });
       $('#md_modal').load('index.php?v=d&plugin=digicode&modal=modal.digicode&id=#id#').dialog('open');
     });

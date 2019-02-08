@@ -53,7 +53,7 @@ class digicode extends eqLogic {
         $ActivateEtatPortes = $eqLogic->getConfiguration('ActivateEtatPortes');
         $ActivateEtatFenetres = $eqLogic->getConfiguration('ActivateEtatFenetres');
         $Name = $eqLogic->getName();
-            log::add('digicode', 'DEBUG', 'Valeur alarme '.$etatAlarme);
+        log::add('digicode', 'DEBUG', 'Valeur alarme '.$etatAlarme);
         if (!empty($ActivateEtatPortes)) {
             $etatPortes = cmd::byString($eqLogic->getConfiguration('digicodeEtatPortes'));
             $valueEtatPortes  = $etatPortes->execCmd();
@@ -79,7 +79,7 @@ class digicode extends eqLogic {
             $eqLogic->checkAndUpdateCmd('message', 'Porte(s) ouverte(s)');
         }elseif($valueEtatPortes == 1 && $valueEtatFenetres == 1){
             log::add('digicode', 'DEBUG', 'Au moins une porte est restée ouverte !');
-           $eqLogic->checkAndUpdateCmd('message', 'Porte(s) et Fenêtre(s) ouverte(s)');
+            $eqLogic->checkAndUpdateCmd('message', 'Porte(s) et Fenêtre(s) ouverte(s)');
         }elseif($etatAlarme == 1 || $etatAlarme == 2){
             log::add('digicode', 'DEBUG', 'Alarme déjà active !');
             $eqLogic->checkAndUpdateCmd('message', 'Alarme déjà active');
@@ -88,7 +88,7 @@ class digicode extends eqLogic {
             return true;
 
         }
-      		$eqLogic->refreshWidget();
+        $eqLogic->refreshWidget();
     }
 
 
@@ -325,8 +325,8 @@ class digicodeCmd extends cmd {
                                 $cmd2 = cmd::byString($cmdAlarmeDesactive);
                                 $cmd2->execCmd();
                                 $eqLogic->checkAndUpdateCmd('etat', '0');
-                               $eqLogic->checkAndUpdateCmd('message', 'Dernière désactivation par '. $cmd->getName());
-				                $eqLogic->refreshWidget();
+                                $eqLogic->checkAndUpdateCmd('message', 'Dernière désactivation par '. $cmd->getName());
+                                $eqLogic->refreshWidget();
                                 return 0;
                                 break;
                             }
@@ -356,19 +356,22 @@ class digicodeCmd extends cmd {
                 $cmd->execCmd();
                 $eqLogic->checkAndUpdateCmd('etat', '2');
             }
-				$eqLogic->refreshWidget();
+            $eqLogic->refreshWidget();
             break;
 
             case 'Mode désactivé':
             $eqLogic->checkAndUpdateCmd('etat', '0');
+            $eqLogic->refreshWidget();
             break;
 
             case 'Mode partiel':
             $eqLogic->checkAndUpdateCmd('etat', '2');
+            $eqLogic->refreshWidget();
             break;
 
             case 'Mode total':
             $eqLogic->checkAndUpdateCmd('etat', '1');
+            $eqLogic->refreshWidget();
             break;
         }
 

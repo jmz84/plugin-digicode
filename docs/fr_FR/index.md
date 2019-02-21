@@ -18,7 +18,7 @@ Installation
 
 ### Pré-requis
 Pour utiliser ce plugin il faut disposer des commandes suivantes :
-- Etat de l'alarme de l'alarme
+- Etat de l'alarme
 - Activation Totale de l'alarme
 - Activation Partielle
 - Désactivation de l'alarme
@@ -40,11 +40,11 @@ Il faut ensuite donner les informations de votre alarme.
 
 ![equipement](../images/equipement.png)
 
-- 1 : La commande qui fournie le statut de l'alarme
+- 1 : La commande qui fournit le statut de l'alarme
 - 2 : La commande qui active le mode Total
 - 3 : La commande qui active le mode Partiel
-- 4 : La commande qui déactive l'alarme
-- 5 et 6 : Les commandes qui fournie le statut des ouvrants (virtuel généré par le résumé domotique)
+- 4 : La commande qui désactive l'alarme
+- 5 et 6 : Les commandes qui fournissent le statut des ouvrants (virtuel généré par le résumé domotique)
 - 7 : Délais d'activation
 - 8 : Activation de l'état des ouvrants
 - 9 : Inversion de l'état des ouvrants
@@ -52,13 +52,13 @@ Il faut ensuite donner les informations de votre alarme.
 ### Création des utilisateurs
 La création, la modification et la suppression des utilisateurs se fait directement depuis le widget en cliquant sur la roue crantée qui se situe en bas à droite.
 Le code utilisateur est basé sur 4 chiffres
-Le code maitre est basé sur 5 chiffres.
+Le code maître est basé sur 5 chiffres.
 
 ![configuration](../images/configuration.png)
 
-NB : cette icone est inaccessible lorsque l'arlame est activée.
+NB : cette icône est inaccessible lorsque l'arlame est activée.
 
-Après avoir cliqué sur l'icone, une fenêtre s'ouvre et permet la gestion des comptes.
+Après avoir cliqué sur l'icône, une fenêtre s'ouvre et permet la gestion des comptes.
 
 ![utilisateurs](../images/utilisateurs.png)
 
@@ -75,10 +75,10 @@ Le widget comporte plusieurs éléments :
 - 5 : Panneau pour la création des codes
 - 6 : Effacement des chiffres rentrés
 - 7 : Mode de l'Alarme
-- 8 : Nombre de chiffre rentré
+- 8 : Nombre de chiffres rentrés
 
 Pour activer ou désactiver l'alarme, il suffit de taper un code utilisateur (4 chiffres) + la lettre correspondante au mode d'alarme (P : mode partiel, T : mode totale, D : mode désactivé).
-Pour activer ou désactiver le code maitre, il suffit de taper un code maitre (5 chiffres).
+Pour activer ou désactiver le code maître, il suffit de taper un code maître (5 chiffres).
 
 Changelog
 ===
@@ -87,7 +87,7 @@ Changelog
 
 ### Version 1.1 (version market 2018-10-07 22:01:25)
 - Ajout transparence sur design
-- Ajout code maitre pour vérouiller la configuration du widget
+- Ajout code maître pour verrouiller la configuration du widget
 - Ajout possibilité d'inverser l'état des ouvrants
 
 ### Version 1.2 (version market )

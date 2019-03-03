@@ -53,7 +53,6 @@ class digicode extends eqLogic {
         $ActivateEtatPortes = $eqLogic->getConfiguration('ActivateEtatPortes');
         $ActivateEtatFenetres = $eqLogic->getConfiguration('ActivateEtatFenetres');
         $Name = $eqLogic->getName();
-        log::add('digicode', 'DEBUG', 'Valeur alarme '.$etatAlarme);
         if (!empty($ActivateEtatPortes)) {
             $etatPortes = cmd::byString($eqLogic->getConfiguration('digicodeEtatPortes'));
             $valueEtatPortes  = $etatPortes->execCmd();
@@ -72,19 +71,19 @@ class digicode extends eqLogic {
         }
 
         if($valueEtatFenetres == 1 && $valueEtatPortes == 0){
-            log::add('digicode', 'DEBUG', 'Au moins une fenêtre est restée ouverte !');
+            log::add('digicode', 'INFO', 'Au moins une fenêtre est restée ouverte !');
             $eqLogic->checkAndUpdateCmd('message', 'Fenetre(s) ouverte(s)');
         }elseif($valueEtatPortes == 1 && $valueEtatFenetres == 0){
-            log::add('digicode', 'DEBUG', 'Au moins une porte est restée ouverte !');
+            log::add('digicode', 'INFO', 'Au moins une porte est restée ouverte !');
             $eqLogic->checkAndUpdateCmd('message', 'Porte(s) ouverte(s)');
         }elseif($valueEtatPortes == 1 && $valueEtatFenetres == 1){
-            log::add('digicode', 'DEBUG', 'Au moins une porte est restée ouverte !');
+            log::add('digicode', 'INFO', 'Au moins une porte est restée ouverte !');
             $eqLogic->checkAndUpdateCmd('message', 'Porte(s) et Fenêtre(s) ouverte(s)');
         }elseif($etatAlarme == 1 || $etatAlarme == 2){
-            log::add('digicode', 'DEBUG', 'Alarme déjà active !');
+            log::add('digicode', 'INFO', 'Alarme déjà active !');
             $eqLogic->checkAndUpdateCmd('message', 'Alarme déjà active');
         }else{
-            log::add('digicode', 'DEBUG', 'Tout est ok pour l\'activation');
+            log::add('digicode', 'INFO', 'Tout est ok pour l\'activation');
             return true;
 
         }
@@ -288,13 +287,12 @@ class digicodeCmd extends cmd {
                             $cmd_virt = $eqLogic->getCmd(null, 'codemaitre');
 
                             $cmd_value = $cmd_virt->execCmd();
-                            log::add('digicode', 'DEBUG', 'test : '. $cmd_value);
                             if($cmd_value == 1){
-                                log::add('digicode', 'DEBUG', 'MasterCode !!!');
+                                log::add('digicode', 'INFO', 'Désactivation du code maitre');
                                 $eqLogic->checkAndUpdateCmd('codemaitre', '0');
                                 $eqLogic->checkAndUpdateCmd('message', 'Désactivation du code maitre');
                             }else{
-                                log::add('digicode', 'DEBUG', 'MasterCode !!!');
+                                log::add('digicode', 'INFO', 'Activation du code maitre');
                                 $eqLogic->checkAndUpdateCmd('codemaitre', '1');
                                 $eqLogic->checkAndUpdateCmd('message', 'Activation du code maitre');
                             };
@@ -305,7 +303,8 @@ class digicodeCmd extends cmd {
                                 case 'P':
                                 $returnCheck = $eqLogic->checkandactivate($mode,$eqLogic);
                                 if( $returnCheck ==1){
-                                    log::add('digicode', 'DEBUG', 'Activation de l\'alarme partielle par l\'utilisateur '. $cmd->getName() . ' (Code utilisé ' .$cmd->getConfiguration('userCode') .')' );
+                                    log::add('digicode', 'INFO', 'Activation de l\'alarme partielle par l\'utilisateur '. $cmd->getName());
+                                    log::add('digicode', 'DEBUG', 'Code utilisé ' .$cmd->getConfiguration('userCode'));
                                     $eqLogic->checkAndUpdateCmd('message', 'Dernière activation par '. $cmd->getName());
                                     return 2;
                                 }
@@ -314,14 +313,16 @@ class digicodeCmd extends cmd {
                                 case 'T':
                                 $returnCheck =$eqLogic->checkandactivate($mode,$eqLogic);
                                 if( $returnCheck ==1){
-                                    log::add('digicode', 'DEBUG', 'Activation de l\'alarme totale par l\'utilisateur '. $cmd->getName() . ' (Code utilisé ' .$cmd->getConfiguration('userCode') .')' );
+                                    log::add('digicode', 'INFO', 'Activation de l\'alarme totale par l\'utilisateur '. $cmd->getName());
+                                    log::add('digicode', 'DEBUG', 'Code utilisé ' .$cmd->getConfiguration('userCode'));
                                     $eqLogic->checkAndUpdateCmd('message', 'Dernière activation par '. $cmd->getName());
                                     return 1;
                                 }
                                 break;
 
                                 case 'D':
-                                log::add('digicode', 'DEBUG', 'Désactivation de l\'alarme par l\'utilisateur '. $cmd->getName() . ' (Code utilisé ' .$cmd->getConfiguration('userCode') .')' );
+                                log::add('digicode', 'INFO', 'Désactivation de l\'alarme par l\'utilisateur '. $cmd->getName());
+                                log::add('digicode', 'DEBUG', 'Code utilisé ' .$cmd->getConfiguration('userCode'));
                                 $cmd2 = cmd::byString($cmdAlarmeDesactive);
                                 $cmd2->execCmd();
                                 $eqLogic->checkAndUpdateCmd('etat', '0');

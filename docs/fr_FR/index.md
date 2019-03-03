@@ -7,7 +7,7 @@ Ce plugin permet d'afficher un digicode logiciel pour piloter une alarme.
 
 Il inclut les fonctionnalités suivantes :
 
-- Timer (configurable) avant activation de l'alarme
+- Compte à rebours (configurable) avant activation de l'alarme
 - Test des ouvrants avant activation
 - Test de l'état de l'alarme avant activation
 - Message sur état
@@ -16,7 +16,7 @@ Il inclut les fonctionnalités suivantes :
 Installation
 ===
 
-### Pré-requis
+### Prérequis
 Pour utiliser ce plugin il faut disposer des commandes suivantes :
 - Etat de l'alarme
 - Activation Totale de l'alarme
@@ -83,15 +83,23 @@ Pour activer ou désactiver le code maître, il suffit de taper un code maître 
 Changelog
 ===
 ### Version 1.0 (version market 2018-08-19 22:01:25)
-- Verion initiale
+- Version initiale
 
 ### Version 1.1 (version market 2018-10-07 22:01:25)
 - Ajout transparence sur design
 - Ajout code maître pour verrouiller la configuration du widget
 - Ajout possibilité d'inverser l'état des ouvrants
 
-### Version 1.2 (version market )
+### Version 1.2 (version market 2018-12-16 12:14:41)
 - Ajout d'une fonction permettant d'activer/désactiver le test des ouvrants
 - Correction du comportement du widget (bug zoom)
 - Ajout d'une fonction permettant d'actualiser le widget lors de l'activation de l'alarme hors plugin
 - Amélioration de l'assistant de création des codes (code vide rejeté)
+
+### Version 1.3 (version market 2018-02-07)
+- Correction d'un bug sur l'activation/désactivation des ouvrants
+- Ajout du nom de l'utilisateur qui active/désactive l'alarme
+
+### Version 1.3 (version market 2018-03-03)
+- Correction du niveau des logs
+- Publication de la première version stable

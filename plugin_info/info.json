@@ -1,0 +1,10 @@
+{
+	"id" : "digicode",
+	"name" : "Digicode Plugin",
+	"licence" : "AGPL",
+	"author" : "Jerome MARTINEZ",
+	"require" : "3.0",
+	"category" : "security",
+	"changelog" : "https://jmz84.github.io/plugin-digicode/#language#/changelog",
+	"documentation" : "https://jmz84.github.io/plugin-digicode/#language#/"
+}

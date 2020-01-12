@@ -57,8 +57,8 @@ foreach ($digicode->getCmd('info') as $cmd) {
         echo $cmd->getConfiguration('userCode');
         echo '</td>';
         echo '<td>';
-        echo '<a class="btn btn-success bt_Modify btn-xs" data-id="' . $cmd->getid() . '"><i class="fa fa-gear"></i></a></center>';
-        echo '<a class="btn btn-danger bt_Remove btn-xs" data-id="' . $cmd->getid() . '"><i class="fa fa-trash-o"></i></a></center>';
+        echo '<a class="btn btn-success bt_Modify btn-xs" data-id="' . $cmd->getid() . '"><i class="fas fa-cog"></i></a></center>';
+        echo '<a class="btn btn-danger bt_Remove btn-xs" data-id="' . $cmd->getid() . '"><i class="maison-poubelle"></i></a></center>';
         echo '</td>';
         echo '</tr>';
     }
